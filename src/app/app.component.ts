@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private universe: UniverseComponent;
   private anniversaryMessageShown: boolean = false;
   private celestialFactory: CelestialFactory;
+  private anniversaryFlagCount = 0;
 
   constructor(private time: TimeService) {}
 
@@ -39,6 +40,17 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private needsAnniversaryMessage(): boolean {
+    if (this.waitingForFlagCount()) {
+      if (this.finishedWaiting()) {
+        return true;
+      }
+      this.anniversaryFlagCount++;
+      return false;
+    }
+    return false;
+  }
+
+  private waitingForFlagCount(): boolean {
     return this.isAnniverary() && !this.anniversaryMessageShown;
   }
 
@@ -51,6 +63,10 @@ export class AppComponent implements OnInit, OnDestroy {
       return true;
     }
     return true;
+  }
+
+  private finishedWaiting(): boolean {
+    return this.anniversaryFlagCount > 5;
   }
 
   ngOnDestroy(): void {
