@@ -56,13 +56,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private isAnniverary(): boolean {
     const today = new Date(Date.now());
-    const date = today.getDate();
-    const month = today.getMonth();
 
-    if (date === 29 && month === 2) {
+    if (this.is29March(today)) {
       return true;
     }
     return true;
+  }
+
+  private is29March(today: Date): boolean {
+    const date = today.getDate();
+    const month = today.getMonth();
+    return date === 29 && month === 2;
   }
 
   private finishedWaiting(): boolean {
