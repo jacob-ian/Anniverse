@@ -1,0 +1,16 @@
+:host
+  flex: 1
+  height: 100%
+
+@keyframes sparkle
+  0%
+    filter: brightness(0.8)
+    
+  50%
+    filter: brightness(1)
+
+  100%
+    filter: brightness(0.8)
+    
+canvas
+  animation: sparkle 250ms infinite
