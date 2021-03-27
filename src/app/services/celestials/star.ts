@@ -1,8 +1,21 @@
 import { Celestial, Position } from './celestial';
 
 export class Star extends Celestial {
-  constructor() {
+  private randomiseSize: boolean = true;
+  private radius: number = 10;
+  private inset: number = 2;
+  private starSpikes: number = 5;
+  private context: CanvasRenderingContext2D;
+  private position: Position;
+
+  constructor();
+  constructor(randomiseSize: boolean);
+  constructor(randomise?: boolean) {
     super();
+
+    if (randomise) {
+      this.randomiseSize = randomise;
+    }
   }
 
   public getExpiry(): number {
@@ -10,16 +23,57 @@ export class Star extends Celestial {
   }
 
   public draw(position: Position, context: CanvasRenderingContext2D): void {
-    let image = this.createImageElement();
-    context.drawImage(image, position.x, position.y);
+    this.configureCanvas(context);
+    this.position = position;
+    this.selectRadiusAndInset();
+    return this.drawStar();
   }
 
-  private createImageElement(): HTMLImageElement {
-    let image = document.createElement('img');
-    image.src = 'assets/svg/star.svg';
-    image.width = 5;
-    image.height = 5;
+  private configureCanvas(context: CanvasRenderingContext2D): void {
+    this.context = context;
+    this.context.fillStyle = '#FFFDE9';
+    this.context.strokeStyle = '#FFFDE9';
+    this.context.lineWidth = 1;
+  }
 
-    return image;
+  private selectRadiusAndInset(): void {
+    if (this.randomiseSize) {
+      this.radius = this.generateRadius();
+    }
+
+    this.inset = this.radius / 2;
+  }
+
+  private generateRadius(): number {
+    return Math.random() * (10 - 6) - 6;
+  }
+
+  private drawStar(): void {
+    this.context.save();
+    this.context.beginPath();
+    this.drawSpikes();
+    this.context.closePath();
+    this.context.stroke();
+    this.context.fill();
+    this.context.restore();
+  }
+
+  private drawSpikes(): void {
+    this.moveToStartPosition();
+    for (let spike = 0; spike < this.starSpikes; spike++) {
+      this.drawSpike();
+    }
+  }
+
+  private moveToStartPosition(): void {
+    this.context.translate(this.position.x, this.position.y);
+    this.context.moveTo(0, 0 - this.radius);
+  }
+
+  private drawSpike(): void {
+    this.context.rotate(Math.PI / this.starSpikes);
+    this.context.lineTo(0, 0 - (this.radius - this.inset));
+    this.context.rotate(Math.PI / this.starSpikes);
+    this.context.lineTo(0, 0 - this.radius);
   }
 }
