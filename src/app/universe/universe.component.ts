@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AnniversaryMessage } from '../services/celestials/anniversary-message';
 import { Celestial, Position } from '../services/celestials/celestial';
 
@@ -16,6 +10,7 @@ import { Celestial, Position } from '../services/celestials/celestial';
 export class UniverseComponent implements OnInit {
   public universeWidth: number = 0;
   public universeHeight: number = 0;
+  public showInformation: boolean = false;
 
   @ViewChild('canvas', { static: true }) private canvasRef: ElementRef;
   private canvas: HTMLCanvasElement;
@@ -64,5 +59,9 @@ export class UniverseComponent implements OnInit {
 
   private generateRandomNumber(max: number): number {
     return Math.random() * max;
+  }
+
+  public onButtonPress(): void {
+    this.showInformation = !this.showInformation;
   }
 }
