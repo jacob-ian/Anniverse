@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private finishedWaiting(): boolean {
-    return this.anniversaryFlagCount > 5;
+    return this.anniversaryFlagCount > 2;
   }
 
   ngOnDestroy(): void {
