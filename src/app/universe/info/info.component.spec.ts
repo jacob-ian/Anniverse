@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { InfoComponent } from './info.component';
 
@@ -8,9 +9,8 @@ describe('InfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InfoComponent ]
-    })
-    .compileComponents();
+      declarations: [InfoComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -21,5 +21,14 @@ describe('InfoComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('Test button click', () => {
+    it('Should emit a string from the output emitter', () => {
+      spyOn(component.clickEmitter, 'emit');
+      let button = fixture.debugElement.query(By.css('button'));
+      button.triggerEventHandler('click', null);
+      expect(component.clickEmitter.emit).toHaveBeenCalledWith('click');
+    });
   });
 });

@@ -54,13 +54,13 @@ export class AppComponent implements OnInit, OnDestroy {
     return this.isAnniverary() && !this.anniversaryMessageShown;
   }
 
-  private isAnniverary(): boolean {
+  public isAnniverary(): boolean {
     const today = new Date(Date.now());
 
     if (this.is29March(today)) {
       return true;
     }
-    return true;
+    return false;
   }
 
   private is29March(today: Date): boolean {

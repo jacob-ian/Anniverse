@@ -19,53 +19,24 @@ describe('TimeService', () => {
       service.stop();
     });
 
-    describe('Add a counter', () => {
-      let count: number = 0;
-
+    describe('Test calling a spy method', () => {
+      let timerCallback: jasmine.Spy<any>;
       beforeEach(() => {
-        service.addOnTickAction(() => {
-          count++;
-        });
-        service.start();
-      });
-      it('Should increase the count', fakeAsync(() => {
         jasmine.clock().install();
-        jasmine.clock().tick(1000);
+        timerCallback = jasmine.createSpy('timerCallback');
+        service.addOnTickAction(timerCallback);
+        service.start();
+      });
+
+      afterEach(() => {
+        service.stop();
         jasmine.clock().uninstall();
-        expect(count).toBe(1);
-      }));
-    });
-
-    describe('Test adding to an array', () => {
-      let objects = [];
-      let item = { test: 'test' };
-      beforeEach(() => {
-        service.addOnTickAction(() => {
-          objects.push(item);
-        });
-        service.start();
       });
 
-      it('Should have added an item', fakeAsync(() => {
-        tick(2000);
-        expect(objects).toContain(item);
-      }));
-    });
-
-    describe('Test a console log output', () => {
-      beforeEach(() => {
-        console.log = jasmine.createSpy('log');
-
-        service.addOnTickAction(() => {
-          console.log('tick');
-        });
-        service.start();
+      it('Should call the spy function', () => {
+        jasmine.clock().tick(1000);
+        expect(timerCallback).toHaveBeenCalled();
       });
-
-      it('Should have logged the word tick', fakeAsync(() => {
-        tick(2000);
-        expect(console.log).toHaveBeenCalledWith('tick');
-      }));
     });
   });
 });
