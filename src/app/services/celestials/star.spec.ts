@@ -54,7 +54,5 @@ describe('Star', () => {
         expect(contextSpy.beginPath).toHaveBeenCalled();
       });
     });
-
-    describe('Test with set radius', () => {});
   });
 });
