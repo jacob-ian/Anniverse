@@ -12,7 +12,7 @@ export class AnniversaryMessageFactory extends CelestialFactory {
     let years = this.getAnniversaryYear();
     let yearSuffix = this.getYearsSuffix(years);
 
-    return `Happy ${years}${yearSuffix} Anniversary!`;
+    return `Happy ${years}${yearSuffix} Anniversary`;
   }
 
   private getAnniversaryYear(): number {
