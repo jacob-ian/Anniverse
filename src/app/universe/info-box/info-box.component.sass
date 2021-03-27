@@ -1,0 +1,48 @@
+:host
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  border-radius: 25px
+  background-color: #222
+  z-index: 10000
+  padding: 25px
+  font-family: "Rubik", sans-serif
+  color: white
+
+h1
+  margin-top: 0
+  font-weight: 700
+
+button
+  background: transparent
+  cursor: pointer
+  outline: none
+  border: none
+  position: absolute
+  top: 15px
+  right: 15px
+
+  svg 
+    height: 18px
+    width: 18px
+
+    path
+      transition: all ease-in-out 200ms
+      fill: rgba(255,255,255,0.7)
+
+  svg:hover
+    path
+      fill: rgba(255,255,255,1)
+
+a
+  text-decoration: none
+  font-weight: 600
+  color: #9ba1dd
+  transition: all ease-in-out 200ms
+
+a:hover
+  color: white
+
+.center
+  text-align: center
