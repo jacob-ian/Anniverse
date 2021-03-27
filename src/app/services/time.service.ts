@@ -18,7 +18,15 @@ export class TimeService implements OnDestroy {
   }
 
   private tick(): void {
-    this.tickActions.forEach((action) => action.callback());
+    this.tickActions.forEach((action) => this.executeAction(action));
+  }
+
+  private executeAction(action: TickAction): void {
+    try {
+      return action.callback();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   public stop(): void {
