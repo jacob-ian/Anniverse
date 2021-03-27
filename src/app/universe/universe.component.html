@@ -1,0 +1,3 @@
+<canvas #canvas [width]="universeWidth" [height]="universeHeight"></canvas>
+<app-info (clicked)="onButtonPress()"></app-info>
+<app-info-box *ngIf="showInformation" (close)="onButtonPress()"></app-info-box>

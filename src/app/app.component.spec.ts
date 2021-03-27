@@ -1,22 +1,24 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let app: AppComponent;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule],
+      declarations: [AppComponent],
     }).compileComponents();
   });
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
+  });
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
@@ -26,10 +28,30 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('Anniverse');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('Anniverse app is running!');
+  describe('Test determination of anniversary', () => {
+    beforeEach(() => {
+      jasmine.clock().install();
+    });
+
+    afterEach(() => {
+      jasmine.clock().uninstall();
+    });
+    describe('Test on a day that is not the anniversary', () => {
+      it('Should return false', () => {
+        jasmine.clock().mockDate(new Date('27-Mar-2021'));
+
+        let isAnni = app.isAnniverary();
+        expect(isAnni).toBeFalse();
+      });
+    });
+
+    describe('Test on a day that it is the anniversary', () => {
+      it('Should return true', () => {
+        jasmine.clock().mockDate(new Date('29-Mar-2023'));
+
+        let isAnni = app.isAnniverary();
+        expect(isAnni).toBeTrue();
+      });
+    });
   });
 });
