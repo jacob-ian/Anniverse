@@ -4,17 +4,20 @@ export class Star extends Celestial {
   private randomiseSize: boolean = true;
   private radius: number = 10;
   private inset: number = 2;
-  private starSpikes: number = 5;
+  private starSpikes: number = 4;
   private context: CanvasRenderingContext2D;
   private position: Position;
+  private paints: number = 0;
+  private interval: any;
 
   constructor();
-  constructor(randomiseSize: boolean);
-  constructor(randomise?: boolean) {
+  constructor(radius: number);
+  constructor(radius?: number) {
     super();
 
-    if (randomise) {
-      this.randomiseSize = randomise;
+    if (radius) {
+      this.randomiseSize = false;
+      this.radius = radius;
     }
   }
 
@@ -74,8 +77,8 @@ export class Star extends Celestial {
   }
 
   private paint(): void {
-    this.context.fillStyle = 'rgba(255,253,233)';
-    this.context.strokeStyle = 'rgba(255,253,244)';
+    this.context.fillStyle = `rgb(255,253,233)`;
+    this.context.strokeStyle = `rgb(255,253,244)`;
     this.context.lineWidth = 1;
     this.context.stroke();
     this.context.fill();

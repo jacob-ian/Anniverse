@@ -10,4 +10,8 @@ export class StarFactory extends CelestialFactory {
   public create(): Celestial {
     return new Star();
   }
+
+  public createWithRadius(radius: number) {
+    return new Star(radius);
+  }
 }
